@@ -21,7 +21,7 @@ jobs:
 
     - name: Run Model Checks
       run: |
-        python - <<EOF
+        cat << 'EOF' | python
         import torch
         import torch.nn as nn
         import sys
