@@ -24,9 +24,12 @@ jobs:
         python - <<EOF
         import torch
         import torch.nn as nn
-        from venv.Model import Net
-        from torchsummary import summary
         import sys
+        import os
+        
+        # Add the repository root to Python path
+        sys.path.append(os.getcwd())
+        from Model import Net
 
         def check_model():
             model = Net()
@@ -55,7 +58,7 @@ jobs:
             print("✅ Dropout check passed")
 
             # 4. Check for GAP (Global Average Pooling) vs FC Layer
-            has_gap = any(isinstance(m, nn.AdaptiveAvgPool2d) or isinstance(m, nn.AvgPool2d) 
+            has_gap = any(isinstance(m, (nn.AdaptiveAvgPool2d, nn.AvgPool2d)) 
                          for m in model.modules())
             has_fc = any(isinstance(m, nn.Linear) for m in model.modules())
             
